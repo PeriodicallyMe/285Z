@@ -2,7 +2,7 @@
 #include "285R-Library/waypoints.hpp"
 void red()
 {
-  flywheel.moveVelocity(180);
+  flywheel.moveVelocity(185);
   // pros::Task::delay(5000);
   while (flywheel.getActualVelocity() < 180)
     pros::Task::delay(25);
@@ -23,7 +23,7 @@ void red()
 
 void blue()
 {
-  flywheel.moveVelocity(180);
+  flywheel.moveVelocity(185);
   // pros::Task::delay(5000);
   while (flywheel.getActualVelocity() < 180)
     pros::Task::delay(25);

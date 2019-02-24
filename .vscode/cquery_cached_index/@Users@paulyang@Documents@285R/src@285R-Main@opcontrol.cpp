@@ -14,7 +14,6 @@ void opcontrol()
   while(ONLINE)
   {
     ballIndexer.setBrakeMode(AbstractMotor::brakeMode::hold);
-    ballIntake.setBrakeMode(AbstractMotor::brakeMode::hold);
     // testTracker.track();
     // std::string angle = std::to_string(testTracker.getAngle(true));
     // boybick.setText(0, 0, angle);

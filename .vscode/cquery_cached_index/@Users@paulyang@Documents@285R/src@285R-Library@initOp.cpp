@@ -83,6 +83,7 @@ void intakeStyle ()
     {
       ballIndexer.moveVelocity(200);
       ballIntake.moveVelocity (420);
+      ballIntakeToggle = true;
       if (doubleShot)
         doubleShotControl();
     }
