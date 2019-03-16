@@ -1,9 +1,9 @@
 #include "285R-Main/initRobot.hpp"
 
 Motor ballIntake  (5, true,  AbstractMotor::gearset::blue );
-Motor ballIndexer (6, true, AbstractMotor::gearset::green);
+Motor ballIndexer (6, true, AbstractMotor::gearset::blue);
 Motor flywheel    (7, true, AbstractMotor::gearset::green);
-Motor l           (9, true,  AbstractMotor::gearset::green);
+Motor l           (8, true,  AbstractMotor::gearset::green);
 
 Motor fl           (1, false,  AbstractMotor::gearset::green);
 Motor bl           (2, false,  AbstractMotor::gearset::green);

@@ -18,14 +18,13 @@ void opcontrol()
     // std::string angle = std::to_string(testTracker.getAngle(true));
     // boybick.setText(0, 0, angle);
 
-    flywheel.moveVelocity(185);
+    flywheel.moveVelocity(190);
 
     if (btnLazyMode.changedToPressed())
       lazy = !lazy;
 
     driveStyle();
 
-    doubleShotControl();
     ballControl();
     lControl();
   }
