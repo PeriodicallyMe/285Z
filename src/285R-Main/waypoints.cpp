@@ -30,6 +30,7 @@ Point hpRed                          //> High Flag Pivot
   0.0_deg
 };
 
+
 Point hRed                           //> High Flag
 {
   1.5_ft,
@@ -47,7 +48,7 @@ Point mRed                           //> Middle Flag
 Point lRed                           //> Low Flag
 {
   1.0_ft,
-  11.2_ft,
+  11.0_ft,
   90.0_deg
 };
 

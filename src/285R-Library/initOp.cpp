@@ -3,58 +3,65 @@
 Controller joystick;
 
 pros::ADILineSensor ballSense(1);
-
 Timer timer;
 
 ControllerButton btnShoot												(ControllerDigital::R1);
 ControllerButton btnBallIntake									(ControllerDigital::R2);
-ControllerButton btnReverseBall       					(ControllerDigital::L2);
+ControllerButton btnReverseBall       					(ControllerDigital::A);
 ControllerButton btnDoubleShot                  (ControllerDigital::X );
+ControllerButton btnReverseSystem               (ControllerDigital::Y);
 
+ControllerButton btnHoodToggle                  (ControllerDigital::L2);
 ControllerButton btnLUsager                     (ControllerDigital::L1);         //> 'L' refers to the robot's arm which was in the shape of an 'L' in its early days
 
 ControllerButton btnLazyMode										(ControllerDigital::up);
 
-ControllerButton btnReverseSystem               (ControllerDigital::A);
 
 bool intakeStyleToggle  {TOGGLE};
 bool ballIntakeToggle   {true};
 bool driveStyleToggle   {TANK};
-bool doubleShot         {true};
+bool doubleShot         {false};
 bool lUsage             {false};
 bool lazy               {false};
+bool hoodToggle         {false};
 
 
 void lControl ()
 {
-  if (btnLUsager.changedToPressed())
+  joystick.setText(0, 0, std::to_string(l.getPosition()));
+  if (btnHoodToggle.changedToPressed())
   {
-    l.moveAbsolute(-460, 200);
+    hoodToggle = !hoodToggle;
   }
-  else if (btnLUsager.changedToReleased())
+  if (btnLUsager.isPressed())
   {
-    l.moveAbsolute(0, 200);
+    l.moveAbsolute(165, 50);
+  }
+  else if (hoodToggle)
+  {
+    l.moveAbsolute(-35, 100);
+  }
+  else if (doubleShot && btnShoot.isPressed())
+  {
+    doubleShotControl();
+  }
+  else
+  {
+    l.moveAbsolute(0,100);
   }
 }
 
-void intakeStyle ()
+void ballControl ()
 {
+    if (btnBallIntake.changedToPressed())
+    {
+      ballIntakeToggle = !ballIntakeToggle;
+    }
     if (btnShoot.isPressed())
     {
       ballIndexer.moveVelocity  (600);
       ballIntake.moveVelocity   (600);
       ballIntakeToggle = true;
-      if (doubleShot)
-      {
-        l.moveAbsolute(-35,200);
-        pros::Task::delay(150);
-        l.moveAbsolute(40, 200);
-        pros::Task::delay(100);
-        l.moveAbsolute(0, 200);
-        l.setBrakeMode(AbstractMotor::brakeMode::hold);
-        pros::Task::delay(1000);
-        l.setBrakeMode(AbstractMotor::brakeMode::coast);
-      }
     }
     else if (btnReverseBall.isPressed())
     {
@@ -74,6 +81,7 @@ void intakeStyle ()
     {
       ballIndexer.moveVelocity	(0);
       ballIntake.moveVelocity	  (0);
+      ballIndexer.setBrakeMode(AbstractMotor::brakeMode::hold);
     }
 //ballSense code (prototype)
     if (ballSense.get_value() < 615) {
@@ -82,19 +90,29 @@ void intakeStyle ()
       timer.clearHardMark();
     }
 
-    if (timer.getDtFromHardMark() >= 250_ms) {
+    if (timer.getDtFromHardMark() >= 150_ms) {
       timer.clearHardMark();
       ballIntakeToggle = false;
       doubleShot = true;
     }
   }
 
-void ballControl ()
-{
-  if (btnBallIntake.changedToPressed())
-    ballIntakeToggle = !ballIntakeToggle;
+void lControlTask(void* param) {
+  while(true) {
+    lControl();
+    pros::Task::delay(10);
+  }
+}
 
-  intakeStyle();
+void doubleShotControl()
+{
+  pros::Task::delay(150);
+  l.moveAbsolute(-35, 100);
+
+  pros::Task::delay(150);
+  l.moveAbsolute(0, 100);
+
+  doubleShot = false;
 }
 
 void lazyMode ()

@@ -16,23 +16,30 @@ AsyncMotionProfileController profile = AsyncControllerFactory::motionProfile
    aut
 );
 
-const bool right {1};
-const bool left  {0};
 
-void shoot ()
+void shoot (bool number)
 {
-  ballIndexer.moveVelocity(600);
+  if(number)
+  {
+    doubleShotControl();
+  }
+  else
+  {
+    ballIndexer.moveVelocity(600);
+    ballIntake.moveVelocity(600);
 
-  pros::Task::delay(250);
+    pros::Task::delay(150);
 
-  ballIndexer.moveVelocity(0);
+    ballIndexer.moveVelocity(0);
+    ballIntake.moveVelocity(0);
+  }
 }
 
-void turn (bool direction)
+void turn (QAngle degrees, float rpm)
 {
+  aut.setMaxVelocity(rpm);
 
-  if (direction)
-  aut.turnAngle(90_deg);
-  else
-  aut.turnAngle(-90_deg);
+  aut.turnAngle(degrees);
+
+  aut.setMaxVelocity(200);
 }
