@@ -1,7 +1,4 @@
-#include "285R-Library/GUI.hpp"
 #include "285R-Main/initRobot.hpp"
-#include "285R-Library/odometry.hpp"
-#include "/Users/paulyang/Documents/285Z/src/285R-Library/flywheelUtil/flywheel.hpp"
 
 
 Controller boybick;
@@ -18,7 +15,9 @@ void opcontrol()
   while(ONLINE)
   {
   //  flywheel.moveVelocity(555);
-    flywheelControl(2775);
+    // flywheel.moveVoltage(11000);
+    flywheel.moveVelocity(555);
+
     if (btnLazyMode.changedToPressed())
       lazy = !lazy;
 

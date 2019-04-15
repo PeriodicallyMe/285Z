@@ -1,4 +1,3 @@
-#include "main.h"
 #include "pidVelSystem.hpp"
 #include "285R-Main/initRobot.hpp"
 //Motor* flywheel = new okapi::Motor(7);
@@ -6,13 +5,13 @@ double flywheelRatio = 5;
 using namespace flywheelLib;
 flywheelLib::velPID* pid = new flywheelLib::velPID(0.5, 0.05, 0.055, 0.9);
 
-flywheelLib::emaFilter* rpmFilter = new flywheelLib::emaFilter(0.3); //was 0.15, should change smoothing
+flywheelLib::emaFilter* rpmFilter = new flywheelLib::emaFilter(0.15);
 
 double motorSlew = 0.7;
 
 
 
-//double targetRPM = 555*5;
+double targetRPM = 555*5;
 
 double currentRPM = 0;
 
@@ -20,15 +19,19 @@ double lastPower = 0;
 
 double motorPower = 0;
 
+double error = 0;
 
 
-void flywheelControl(double targetRPM)
+void flywheelControl()
 
 {
+  if(motorPower <= 0) motorPower = 0;
 
-  currentRPM = rpmFilter->filter(flywheel->getActualVelocity() * flywheelRatio);
 
+  //currentRPM = rpmFilter->filter(flywheel->getActualVelocity() * flywheelRatio);
+  currentRPM = flywheel->getActualVelocity() * flywheelRatio;
 
+  error = targetRPM - currentRPM;
 
   motorPower = pid->calculate(targetRPM, currentRPM);
 
@@ -60,6 +63,6 @@ void flywheelControl(double targetRPM)
 
   //std::cout << "RPM: " << currentRPM << " Power: "<< motorPower << " Error: "<< flywheelPID.getError() << "\n";
 
-  pros::delay(20);
+  //pros::delay(20);
 
 }

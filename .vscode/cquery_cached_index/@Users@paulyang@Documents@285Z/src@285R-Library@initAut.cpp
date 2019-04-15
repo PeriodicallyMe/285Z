@@ -21,7 +21,11 @@ void shoot (bool number)
 {
   if(number)
   {
+    ballIntake.moveVelocity(600);
+    ballIndexer.moveVelocity(600);
     doubleShotControl();
+    ballIntake.moveVelocity(0);
+    ballIndexer.moveVelocity(0);
   }
   else
   {

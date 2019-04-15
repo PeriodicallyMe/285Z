@@ -2,8 +2,8 @@
 
 Motor ballIntake  (5, true,  AbstractMotor::gearset::blue);
 Motor ballIndexer (6, true, AbstractMotor::gearset::blue);
-Motor* flywheel = new okapi::Motor(7);
-//Motor flywheel    (7, true, AbstractMotor::gearset::blue);
+// Motor* flywheel = new okapi::Motor(7);
+Motor flywheel    (7, true, AbstractMotor::gearset::blue);
 Motor l           (9, false,  AbstractMotor::gearset::red);
 
 Motor fl           (1, false,  AbstractMotor::gearset::green);

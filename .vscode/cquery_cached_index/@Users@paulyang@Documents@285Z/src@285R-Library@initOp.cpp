@@ -39,7 +39,7 @@ void lControl ()
   }
   else if (hoodToggle)
   {
-    l.moveAbsolute(-35, 100);
+    l.moveAbsolute(-20, 100);
   }
   else if (doubleShot && btnShoot.isPressed())
   {
@@ -47,7 +47,7 @@ void lControl ()
   }
   else
   {
-    l.moveAbsolute(0,100);
+    l.moveAbsolute(0,50);
   }
 }
 
@@ -107,7 +107,7 @@ void lControlTask(void* param) {
 void doubleShotControl()
 {
   pros::Task::delay(150);
-  l.moveAbsolute(-35, 100);
+  l.moveAbsolute(-20, 100);
 
   pros::Task::delay(150);
   l.moveAbsolute(0, 100);

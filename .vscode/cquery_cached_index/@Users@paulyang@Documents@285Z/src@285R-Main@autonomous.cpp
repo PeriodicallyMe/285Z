@@ -1,6 +1,5 @@
 #include "285R-Main/initRobot.hpp"
 #include "285R-Library/waypoints.hpp"
-#include "/Users/paulyang/Documents/285Z/src/285R-Library/flywheelUtil/flywheel.hpp"
 
 
 const bool fwd {false};
@@ -13,41 +12,43 @@ const bool twoBalls {true};
 
 void redFront()
 {
-  flywheelControl(2775);
+  flywheel.moveVelocity(555);
+  ballIntake.moveVelocity(600);
   ballIndexer.setBrakeMode(AbstractMotor::brakeMode::hold);
 
   profile.generatePath({initRed, redBall}, "Ball"); //gets ball
   profile.setTarget("Ball", fwd);
   profile.waitUntilSettled();
-  ballIntake.moveVelocity(600);
-  profile.removePath("Ball");
 
-  profile.generatePath({Point{2_ft, 8_ft, -45_deg}, redBall}, "Middle Column"); //goes to pos to shoot middle column
-  profile.setTarget("Middle Column", bwd);
+  profile.setTarget("Ball", bwd);
   profile.waitUntilSettled();
-  profile.removePath("Middle Column");
   ballIntake.moveVelocity(0);
-  turn(-90_deg, 50); //turns to face middle column
+  profile.removePath("Ball");
+  turn(-48_deg,50);
 
-  profile.generatePath({Point{2_ft, 8_ft, 45_deg}, Point{2.5_ft, 8.5_ft, 45_deg}}, "Cap Scrape"); //goes forward to cap to scrape
+  profile.generatePath({Point{1_ft, 7_ft, 45_deg}, Point{2.5_ft, 8.5_ft, 45_deg}}, "Cap Scrape"); //goes forward to cap to scrape
   profile.setTarget("Cap Scrape");
+  pros::Task::delay(750);
   shoot(twoBalls); //double shot middle column
   profile.waitUntilSettled();
   profile.removePath("Cap Scrape");
 
-  l.moveAbsolute(130, 200); //deploy scraper
+  l.moveAbsolute(130, 50);
   ballIntake.moveVelocity(600);
 
-  profile.generatePath({Point{1_ft, 7_ft, 45_deg}, Point{2.5_ft, 8.5_ft, 45_deg}}, "Left Column");
+  // aut.setMaxVelocity(100);
+  profile.generatePath({Point{1_ft, 7_ft, 45_deg}, Point{2.8_ft, 8.8_ft, 45_deg}}, "Left Column");
   profile.setTarget("Left Column", bwd);
+  pros::Task::delay(100);
+  shoot(twoBalls);
   profile.waitUntilSettled();
-  l.moveAbsolute(0,200); //resets scraper
+//  l.moveAbsolute(0,50); //resets scraper
   profile.removePath("Left Column");
+  aut.setMaxVelocity(200);
 
   turn(-43_deg, 50); //turns to face left column
-  shoot(twoBalls); //double shot
   turn(-2_deg, 50); //readjusts to go straight
-  profile.generatePath({hpRed, lRed}, "Left Low Flag");
+  profile.generatePath({hpRed, Point{1_ft, 10_ft, 0_deg}}, "Left Low Flag");
   profile.setTarget("Left Low Flag");
   profile.waitUntilSettled();
 
@@ -68,7 +69,7 @@ void redFront()
 void blueFront()
 {
   //convert to blue please (this is red rn)
-  flywheelControl(2775);
+  // flywheelControl(2775);
   ballIndexer.setBrakeMode(AbstractMotor::brakeMode::hold);
 
   profile.generatePath({initBlue, blueBall}, "Ball"); //gets ball
@@ -122,7 +123,7 @@ void blueFront()
 
 void redBack()
 {
-  flywheelControl(2580);
+  // flywheelControl(2580);
   ballIndexer.setBrakeMode(AbstractMotor::brakeMode::hold);
 
   profile.generatePath({Point{1_ft, 3_ft, 0_deg}, Point{4.75_ft, 3_ft, 0_deg}}, "Ball");
@@ -162,7 +163,7 @@ void redBack()
 }
 void blueBack()
 {
-  flywheelControl(2580);
+  // flywheelControl(2580);
   profile.generatePath({Point{11_ft, 3_ft, 0_deg}, Point{7.25_ft, 3_ft, 0_deg}}, "Ball");
   profile.setTarget("Ball", fwd);
   profile.waitUntilSettled();
@@ -202,7 +203,7 @@ void blueBack()
 
 void redBackDescore ()
 {
-  flywheelControl(2775);
+  // flywheelControl(2775);
   ballIntake.moveVelocity(600);
   profile.generatePath({Point{1_ft, 3_ft, 0_deg}, Point{5_ft, 3_ft, 0_deg}}, "Red Ball descore");
   profile.setTarget("Red Ball descore");
@@ -225,7 +226,7 @@ void redBackDescore ()
 
 void blueBackDescore ()
 {
-  flywheelControl(2775);
+  // flywheelControl(2775);
   ballIntake.moveVelocity(600);
 
   profile.generatePath({Point{11_ft, 3_ft, 0_deg}, Point{7_ft, 3_ft, 0_deg}}, "Blue Ball descore");
@@ -249,7 +250,7 @@ void blueBackDescore ()
 
 void skills()
 {
-  flywheelControl(2775);
+  // flywheelControl(2775);
   ballIndexer.setBrakeMode(AbstractMotor::brakeMode::hold);
 
   profile.generatePath({initRed, redBall}, "Ball");

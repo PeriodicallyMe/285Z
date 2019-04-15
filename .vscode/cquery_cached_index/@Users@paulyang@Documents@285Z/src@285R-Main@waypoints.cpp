@@ -18,7 +18,7 @@ Point initBlue
 //////// Flag Scoring Points ////////
 Point redBall                        //> Location
 {
-  4.8_ft,
+  4.6_ft,
   7.0_ft,
   0.0_deg
 };

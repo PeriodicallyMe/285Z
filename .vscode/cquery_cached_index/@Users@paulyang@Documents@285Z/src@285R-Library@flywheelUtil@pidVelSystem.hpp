@@ -1,8 +1,6 @@
 #pragma once
 
 #include "main.h"
-#include "pidVelSystem.hpp"
-#include "285R-Main/initRobot.hpp"
 
 #include "emaFilter.hpp"
 

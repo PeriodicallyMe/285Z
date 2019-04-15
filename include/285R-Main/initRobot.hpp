@@ -33,7 +33,7 @@ extern AsyncMotionProfileController profile;
 
 extern Motor ballIntake;
 extern Motor ballIndexer;
-extern Motor* flywheel;
+extern Motor flywheel;
 extern Motor l;
 
 extern Motor fl;
@@ -53,7 +53,7 @@ void lControl          ();
 void intakeStyle       ();
 void ballControl       ();
 void doubleShotControl ();
-void flywheelControl   (double targetRPM);
+void flywheelControl();
 
 void lazyMode ();
 
